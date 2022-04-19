@@ -1,7 +1,6 @@
 include config.mak
 all:nali.c libqqwry/qqwry.c
 	gcc -o bin/qqwrynali nali.c libqqwry/qqwry.c
-	cp share/nali.sh bin/nali
 install:bin share
 	install bin/qqwrynali $(DESTDIR)$(bindir) 
 	install bin/nali $(DESTDIR)$(bindir) 

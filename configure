@@ -89,23 +89,52 @@ then
     exit 1
 fi
 
-if test -f /tmp/QQWry.Dat
+
+
+#TMP_DIR=\$TMP_DIR
+if test "z$TMP_DIR" = "z" 
 then
-    rm -f /tmp/QQWry.Dat || exit 1
+  TMP_DIR=\$XDG_RUNTIME_DIR
+
+if test "z\$TMP_DIR" = "z" 
+then
+  if test "z\$HOME" = "z" 
+  then
+    TMP_DIR="."
+  else
+    if test -d "z\$HOME/.cache"
+    then
+      :
+    else
+      mkdir "\$HOME/.cache"
+    fi
+    TMP_DIR="\$HOME/.cache"
+  fi
 fi
+
+fi
+
+
+
+if test -f \$TMP_DIR/QQWry.Dat
+then
+    rm -f \$TMP_DIR/QQWry.Dat || exit 1
+fi
+
+echo tmp \$TMP_DIR/QQWry.Dat
 
 if test "x\$curl" != "x" &&  test -x \$curl 
 then
-    command="\$curl -L  -k --compressed \$qqwry_dat_url -o /tmp/QQWry.Dat"
+    command="\$curl -L  -k --compressed \$qqwry_dat_url -o \$TMP_DIR/QQWry.Dat"
 elif test "x\$wget" != "x" &&  test -x \$wget
 then
-    command="\$wget --no-check-certificate \$qqwry_dat_url -O /tmp/QQWry.Dat"
+    command="\$wget --no-check-certificate \$qqwry_dat_url -O \$TMP_DIR/QQWry.Dat"
 else
     echo Error: Please install curl or wget
     exit 1
 fi 
 echo Updating \$qqwry_dat_local_path
-\$command && mv /tmp/QQWry.Dat \$qqwry_dat_local_path && echo Successfully Updated && exit 0
+\$command && mv \$TMP_DIR/QQWry.Dat \$qqwry_dat_local_path && echo Successfully Updated && exit 0
 
 echo Failed to update
 exit 1

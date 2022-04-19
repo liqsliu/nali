@@ -90,27 +90,31 @@ then
 fi
 
 
-
-#TMP_DIR=\$TMP_DIR
-if test "z$TMP_DIR" = "z" 
+if test -d "/tmp" && test -w "/tmp"
 then
-  TMP_DIR=\$XDG_RUNTIME_DIR
-
-if test "z\$TMP_DIR" = "z" 
-then
-  if test "z\$HOME" = "z" 
+  TMP_DIR="/tmp"
+else
+  TMP_DIR="\$TMPDIR"
+  if test "z$TMP_DIR" = "z" 
   then
-    TMP_DIR="."
-  else
-    if test -d "z\$HOME/.cache"
+    TMP_DIR="\$XDG_RUNTIME_DIR"
+
+    if test "z\$TMP_DIR" = "z" 
     then
-      :
-    else
-      mkdir "\$HOME/.cache"
+      if test "z\$HOME" = "z" 
+      then
+        TMP_DIR="."
+      else
+        if test -d "\$HOME/.cache"
+        then
+          :
+        else
+          mkdir "\$HOME/.cache"
+        fi
+        TMP_DIR="\$HOME/.cache"
+      fi
     fi
-    TMP_DIR="\$HOME/.cache"
   fi
-fi
 
 fi
 

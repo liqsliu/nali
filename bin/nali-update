@@ -1,0 +1,66 @@
+#!/bin/sh
+#qqwry_dat_url="https://chenze.name/wenjian/QQWry.Dat";
+qqwry_dat_url="https://github.com/out0fmemory/qqwry.dat/raw/master/qqwry_lastest.dat";
+qqwry_dat_local_path="/data/data/com.termux/files/home/.local/share/QQWry.Dat"
+curl=`which curl`
+wget=`which wget`
+
+if ! test -w $qqwry_dat_local_path
+then
+    echo You may need sudo
+    exit 1
+fi
+
+
+if test -d "/tmp" && test -w "/tmp"
+then
+  TMP_DIR="/tmp"
+else
+  TMP_DIR="$TMPDIR"
+  if test "z" = "z" 
+  then
+    TMP_DIR="$XDG_RUNTIME_DIR"
+
+    if test "z$TMP_DIR" = "z" 
+    then
+      if test "z$HOME" = "z" 
+      then
+        TMP_DIR="."
+      else
+        if test -d "$HOME/.cache"
+        then
+          :
+        else
+          mkdir "$HOME/.cache"
+        fi
+        TMP_DIR="$HOME/.cache"
+      fi
+    fi
+  fi
+
+fi
+
+
+
+if test -f $TMP_DIR/QQWry.Dat
+then
+    rm -f $TMP_DIR/QQWry.Dat || exit 1
+fi
+
+echo tmp $TMP_DIR/QQWry.Dat
+
+if test "x$curl" != "x" &&  test -x $curl 
+then
+    command="$curl -L  -k --compressed $qqwry_dat_url -o $TMP_DIR/QQWry.Dat"
+elif test "x$wget" != "x" &&  test -x $wget
+then
+    command="$wget --no-check-certificate $qqwry_dat_url -O $TMP_DIR/QQWry.Dat"
+else
+    echo Error: Please install curl or wget
+    exit 1
+fi 
+echo Updating $qqwry_dat_local_path
+$command && mv $TMP_DIR/QQWry.Dat $qqwry_dat_local_path && echo Successfully Updated && exit 0
+
+echo Failed to update
+exit 1

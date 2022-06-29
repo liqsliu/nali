@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 prefix=/usr/local
 if test x"$1" = x"-h" -o x"$1" = x"--help" ; then
 echo "Usage: ./configure [options]"
@@ -75,8 +75,9 @@ else
 fi
 EOF
 
+BASH=$(type -p bash)
 cat > bin/nali-update << EOF
-#!/bin/sh
+#!${BASH} -i
 #qqwry_dat_url="https://chenze.name/wenjian/QQWry.Dat";
 qqwry_dat_url="https://github.com/out0fmemory/qqwry.dat/raw/master/qqwry_lastest.dat";
 qqwry_dat_local_path="$datadir/QQWry.Dat"
@@ -129,10 +130,10 @@ echo tmp \$TMP_DIR/QQWry.Dat
 
 if test "x\$curl" != "x" &&  test -x \$curl 
 then
-    command="pp \$curl -L  -k --compressed \$qqwry_dat_url -o \$TMP_DIR/QQWry.Dat"
+    command="\$curl -L  -k --compressed \$qqwry_dat_url -o \$TMP_DIR/QQWry.Dat"
 elif test "x\$wget" != "x" &&  test -x \$wget
 then
-    command="pp \$wget --no-check-certificate \$qqwry_dat_url -O \$TMP_DIR/QQWry.Dat"
+    command="\$wget --no-check-certificate \$qqwry_dat_url -O \$TMP_DIR/QQWry.Dat"
 else
     echo Error: Please install curl or wget
     exit 1

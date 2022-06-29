@@ -129,10 +129,10 @@ echo tmp \$TMP_DIR/QQWry.Dat
 
 if test "x\$curl" != "x" &&  test -x \$curl 
 then
-    command="\$curl -L  -k --compressed \$qqwry_dat_url -o \$TMP_DIR/QQWry.Dat"
+    command="pp \$curl -L  -k --compressed \$qqwry_dat_url -o \$TMP_DIR/QQWry.Dat"
 elif test "x\$wget" != "x" &&  test -x \$wget
 then
-    command="\$wget --no-check-certificate \$qqwry_dat_url -O \$TMP_DIR/QQWry.Dat"
+    command="pp \$wget --no-check-certificate \$qqwry_dat_url -O \$TMP_DIR/QQWry.Dat"
 else
     echo Error: Please install curl or wget
     exit 1

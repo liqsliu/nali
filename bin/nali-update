@@ -1,7 +1,7 @@
-#!/data/data/com.termux/files/usr/bin/bash -i
+#!bin/bash -i
 #qqwry_dat_url="https://chenze.name/wenjian/QQWry.Dat";
 qqwry_dat_url="https://github.com/out0fmemory/qqwry.dat/raw/master/qqwry_lastest.dat";
-qqwry_dat_local_path="/data/data/com.termux/files/home/.local/share/QQWry.Dat"
+qqwry_dat_local_path="$HOME/.local/share/nali/QQWry.Dat"
 curl=`which curl`
 wget=`which wget`
 

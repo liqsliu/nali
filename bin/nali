@@ -1,7 +1,0 @@
-#!/bin/sh
-if test $# -gt 0
-then
-    echo $@|perl $HOME/.local/share/nali/nali.pl
-else
-    perl $HOME/.local/share/nali/nali.pl
-fi

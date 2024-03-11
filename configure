@@ -5,7 +5,7 @@ echo "Usage: ./configure [options]"
 echo "  --help               print this message"
 echo "  --prefix=PREFIX      default:/usr/local"
 echo "  --bindir=BINDIR      default:$prefix/bin"
-echo "  --datadir=BINDIR     default:$prefix/share"
+echo "  --datadir=BINDIR     default:$prefix/share/nali"
 echo ""
 exit 1
 fi
@@ -53,6 +53,8 @@ then
 fi
 
 
+[[ -e "$datadir" ]] || mkdir -p "$datadir"
+[[ -e "$bindir" ]] || mkdir -p "$bindir"
 # generate config files
 
 cat > config.mak << EOF
